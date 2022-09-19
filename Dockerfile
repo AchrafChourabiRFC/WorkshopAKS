@@ -1,13 +1,15 @@
-FROM ubuntu
-#You can start with any base Docker Image that works for you
+# Pull base image
+FROM debian:latest
 
-RUN echo "#!/bin/bash\n" > /startscript.sh
-RUN echo "mkdir github\n" >> /startscript.sh
-RUN echo "cd github\n" >> /startscript.sh
-RUN echo "git clone \$github\n" >> /startscript.sh
-RUN echo "cd *\n" >> /startscript.sh
-RUN echo "make dockertest\n" >> /startscript.sh
+# Dockerfile Maintainer
+MAINTAINER Jan Wagner "waja@cyconet.org"
 
-RUN chmod +x /startscript.sh
+# Install nginx and adjust nginx config to stay in foreground
+RUN apt-get update && apt-get install --no-install-recommends -y nginx; \
+ echo "daemon off;" >> /etc/nginx/nginx.conf
 
-CMD /startscript.sh
+# Expose HTTP
+EXPOSE 80
+
+# Start nginx
+CMD ["/usr/sbin/nginx"]
