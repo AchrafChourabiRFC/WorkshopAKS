@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "aksworkshop-3f99"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "aksworkshop-3f99"
+  template:
+    metadata:
+      labels:
+        app: "aksworkshop-3f99"
+    spec:
+      containers:
+        - name: "aksworkshop-3f99"
+          image: "aksworkshopregistry.azurecr.io/aksworkshop"
+          ports:
+          - containerPort: 80
